@@ -10,12 +10,14 @@ $.jQTouch({
   
 });  
 
-$(document).ready(function(){
 
-  checkLocalStorage();
-  updateLineUps();
-  
-})
+$(document).ready(function()
+{
+    checkLocalStorage();
+    updateLineUps();
+    $('#chartWrap').hide();  
+});
+
 
 //Function to check local storage for favs
 function checkLocalStorage(){
@@ -87,7 +89,7 @@ function updateLineUps(){
     
   }
   
-  favs.sort(function(a,b){return a.start - b.start});
+  favs.sort(sortTimes);
   
   for(var i in favs){
       
@@ -95,7 +97,7 @@ function updateLineUps(){
     var start = convertTime(favs[i].start);
     var finish = convertTime(favs[i].finish);
     
-    //chec   k for timetable clashes, add extra classes to HTML string below as necessary
+    //check for timetable clashes, add extra classes to HTML string below as necessary
     var clash = checkForClashes(favs,i);
                 
     //build the HTML string to be inserted in to the time table ' +clash+ '
@@ -179,42 +181,99 @@ function eventHandler(element){
   updateLineUps();
 }
 
+
+// fullDayTime
+// returns the starting time of an act taking into account acts starting after midnight as being on the same day
+function fullDayTime(a)
+{
+    // cast time value as an integer (incl. removing preceeding zeros)
+    var parseA = parseInt(a,10);
+    
+    // if time is before 6am, then make it a continuation of the previous day...
+    if (parseA < 600)
+        parseA = parseA + 2400;
+    
+    return parseA;
+}
+
+
+// custom sorting function
+// sorts acts by earliest starting to latest starting,
+// taking into account acts starting after midnight
+function sortTimes(a,b)
+{
+    // cast hr and min components to integers
+    var parseA = parseInt(a.start,10);
+    var parseB = parseInt(b.start,10);
+    
+    // if time is before 6am, then make it a continuation of the previous day...
+    if (parseA < 600) {
+        parseA = parseA + 2400; }
+    if (parseB < 600) {
+        parseB = parseB + 2400; }
+        
+    return (parseA-parseB);
+}
+
+
 function checkForClashes(favs,i)
 {
     var retval = "";
-      
+     
     var prevFavToday = -1;
-    var nextFavToday = -1;
+    var nextFavToday = -1;   
+    var clashPrev = 0;
+    var clashNext = 0;
 
     // clash before:
     // get the index of the act starting before the ith act on the day
-    for (j=0; j<i; j++){
-      if (favs[i].day == favs[j].day){
-      prevFavToday = j;
-      }
-    }
-
-    // if there's a clash with the item on the timetable add classes to HTML string
-    if(prevFavToday > -1){
-      if (favs[i].start < favs[prevFavToday].finish){
-        retval += " fav_clash_prev";
-      }
+    for (j=0; j<i; j++)
+    {	
+        if (favs[i].day == favs[j].day)
+        {
+            prevFavToday = j;
+        }
     }
 
     // clash after:
     // get the index of the act starting after the ith act on the day
-    for (j=favs.length-1; j>i; j--){
-      if (favs[i].day == favs[j].day){
-      nextFavToday = j;
-      }
+    for (j=favs.length-1; j>i; j--)
+    {
+        if (favs[i].day == favs[j].day)
+        {
+            nextFavToday = j;
+        }
     }
 
-    // add class to HTML string
-    if(nextFavToday > -1){
-      if (favs[i].finish > favs[nextFavToday].start){
-        retval += " fav_clash_next";
-      }
+    // if there's a clash with other items on the timetable, flag this item to have the relevant class to HTML string
+    if(prevFavToday > -1)
+    {
+        if ( fullDayTime(favs[i].start) < fullDayTime(favs[prevFavToday].finish))
+        {
+            clashPrev = 1;
+        }
+    }
+    
+    if(nextFavToday > -1)
+    {
+        if ( fullDayTime(favs[i].finish) > fullDayTime(favs[nextFavToday].start))
+        {
+            clashNext = 1;
+            }
     }
    
+    // add relevant class to HTML string
+    if (clashPrev == 1) {
+        if (clashNext == 1) {
+            retval += " fav_clash_both"; }
+        else {
+            retval += " fav_clash_prev"; }
+    } else { // if clashPrev == 0
+        if (clashNext == 1) {
+            retval += " fav_clash_next"; }
+        else {
+            retval += ""; }
+    }   
+  
     return retval;
- }
+}
