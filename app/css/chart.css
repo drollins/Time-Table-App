@@ -1,0 +1,96 @@
+/* Stuff to do with the timeline chart */
+
+ .chart {
+margin-top: 10px;
+text-align: center;
+}
+
+.chartImg {
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border: 2px solid rgb(208, 208, 224);
+color: black;
+text-align: center;
+margin: 0 auto;
+text-align: center;
+background-color: white;
+}
+
+#chartView {
+margin: 10px auto;
+}
+
+#chartWrap {
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border: 2px solid rgb(208, 208, 224);
+color: black;
+width: 280px;
+padding: 8px;
+margin: 15px auto;
+background-color: white;
+}
+
+#chartTitle {
+}
+
+#placeholder {
+width:280px;
+height:800px;
+text-align: center;
+margin-top: 8px;
+}
+
+#chartMsg {
+margin-top: 6px;
+margin-bottom: 6px;
+}
+
+#chartLoading {
+margin-top: 6px;
+font: bold 16px Helvetica;
+text-shadow: rgba(0, 0, 20, 0.4) -1px -1px 0;
+letter-spacing: 0.2em;
+color: #bcf;
+}
+
+
+
+#chartButton {
+font: bold 14px Helvetica;
+color: #f8f8f8;
+text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0;
+margin-top: 10px;
+margin-bottom: 6px;
+-webkit-box-sizing: border-box;
+-webkit-border-radius: 14px;
+-moz-box-sizing: border-box;
+-moz-border-radius: 14px;
+width: 80%;
+height: 35px;
+border-bottom: 1px solid #2d3642;
+//padding: 10px;
+background: url(img/toolbar.png) #6d84a2 repeat-x;
+position: relative;
+}
+
+.chartDay {
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+font: bold 12px Helvetica;
+text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0;
+color: #fff;
+background-color: #fff; 
+border: 1px solid rgb(224, 224, 224);
+height: 30px;
+width: 25%;
+padding: 0px;
+}
+
+.chartDayButtonsShow {
+display: block;
+}
+
+.chartDayButtonsHide {
+display: none;
+}
