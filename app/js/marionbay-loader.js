@@ -37,6 +37,7 @@ act(false,"wed","valley","Dj Emma Peel","1915","2015");
 act(false,"wed","valley","Lilikoi Kaos","2015","2030");
 act(false,"wed","valley","Dj Kano","2030","2200");
 
+
 //Thursday
 act(false,"thu","valley","Ben Wells & The Middle Names","1100","1140");
 act(false,"thu","valley","Cloud Control","1200","1240");
@@ -60,6 +61,7 @@ act(false,"thu","field","Comedy","1530","1630");
 act(false,"thu","field","The Soft Pack","1640","1730");
 act(false,"thu","field","Tijuana Cartel","1750","1850");
 act(false,"thu","field","The Cool Kids","1910","2000");
+act(false,"thu","field","Deano's Clash Test","2100","2200");
 
 //Friday
 act(false,"fri","valley","Hayley Cooper","1110","1150");
